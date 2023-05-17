@@ -21,6 +21,10 @@ gem "bootsnap", require: false
 
 group :development, :test do
   gem "debug"
+
+  # Code Critics
+  gem "standard"
+  gem "standard-rails"
 end
 
 group :development do
