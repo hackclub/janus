@@ -17,6 +17,9 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 
+# Security
+gem "openid_connect"
+
 gem "bootsnap", require: false
 
 group :development, :test do

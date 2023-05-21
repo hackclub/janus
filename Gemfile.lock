@@ -98,7 +98,10 @@ GEM
   specs:
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
+    aes_key_wrap (1.1.0)
     ast (2.4.2)
+    attr_required (1.0.1)
+    bindata (2.4.15)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -121,6 +124,12 @@ GEM
       reline (>= 0.3.1)
     error_highlight (0.5.1)
     erubi (1.12.0)
+    faraday (2.7.4)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-follow_redirects (0.3.0)
+      faraday (>= 1, < 3)
+    faraday-net_http (3.0.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.13.0)
@@ -132,6 +141,12 @@ GEM
     irb (1.6.4)
       reline (>= 0.3.0)
     json (2.6.3)
+    json-jwt (1.16.3)
+      activesupport (>= 4.2)
+      aes_key_wrap
+      bindata
+      faraday (~> 2.0)
+      faraday-follow_redirects
     language_server-protocol (3.17.0.3)
     lint_roller (1.0.0)
     loofah (2.21.3)
@@ -159,6 +174,19 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.0-x86_64-linux)
       racc (~> 1.4)
+    openid_connect (2.2.0)
+      activemodel
+      attr_required (>= 1.0.0)
+      faraday (~> 2.0)
+      faraday-follow_redirects
+      json-jwt (>= 1.16)
+      net-smtp
+      rack-oauth2 (~> 2.2)
+      swd (~> 2.0)
+      tzinfo
+      validate_email
+      validate_url
+      webfinger (~> 2.0)
     parallel (1.23.0)
     parser (3.2.2.0)
       ast (~> 2.4.1)
@@ -170,6 +198,13 @@ GEM
     rack (3.0.7)
     rack-mini-profiler (3.0.0)
       rack (>= 1.2.0)
+    rack-oauth2 (2.2.0)
+      activesupport
+      attr_required
+      faraday (~> 2.0)
+      faraday-follow_redirects
+      json-jwt (>= 1.11.0)
+      rack (>= 2.1.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -212,6 +247,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.9.1)
       rexml (~> 3.2, >= 3.2.5)
@@ -240,6 +276,11 @@ GEM
       rubocop-rails (~> 2.18.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    swd (2.0.2)
+      activesupport (>= 3)
+      attr_required (>= 0.0.5)
+      faraday (~> 2.0)
+      faraday-follow_redirects
     thor (1.2.2)
     timeout (0.3.2)
     turbo-rails (1.4.0)
@@ -251,6 +292,12 @@ GEM
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
     unicode-display_width (2.4.2)
+    validate_email (0.1.6)
+      activemodel (>= 3.0)
+      mail (>= 2.2.5)
+    validate_url (1.0.15)
+      activemodel (>= 3.0.0)
+      public_suffix
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -260,6 +307,10 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
+    webfinger (2.1.2)
+      activesupport
+      faraday (~> 2.0)
+      faraday-follow_redirects
     webrick (1.8.1)
     websocket (1.2.9)
     websocket-driver (0.7.5)
@@ -278,6 +329,7 @@ DEPENDENCIES
   debug
   error_highlight
   importmap-rails
+  openid_connect
   pg
   puma
   rack-mini-profiler
