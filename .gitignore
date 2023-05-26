@@ -1,3 +1,5 @@
+*.pem
+
 /.idea
 
 /.bundle
