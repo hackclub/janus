@@ -1,0 +1,21 @@
+<%= turbo_frame_tag :calendar, src: calendar_path do %>
+  <%= month_calendar {} %>
+<% end %>
+
+<%= turbo_frame_tag @booking, target: "_top" do %>
+  <%= form_with model: @booking, url: bookings_requests_path do |form| %>
+
+    <%= form.date_field :arrival_at %> → <%= form.date_field :departure_at %>
+
+    <% if @booking.errors.include?(:arrival_at) || @booking.errors.include?(:departure_at) %>
+      <p class="notice">Sorry! Those dates are invalid or not available.</p>
+    <% end %>
+
+    <p class="text--large">What are you planning to do during your stay?</p>
+    <%= form.rich_text_area :justification, style: "margin-bottom: 20px" %>
+
+    <div>
+    <%= form.button "REQUEST BOOKING" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,5 @@
+<h3><%= @booking.title %></h3>
+
+<% if Current.user.staff? %>
+  <%= turbo_frame_tag :new_approval, src: new_booking_approval_path(@booking) %>
+<% end %>

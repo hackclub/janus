@@ -1,0 +1,15 @@
+.button-group {
+  display: inline-flex;
+
+  button {
+    margin-right: 10px;
+  }
+}
+
+.button--success {
+  background-color: green;
+}
+
+.button--danger {
+  background-color: darkred;
+}

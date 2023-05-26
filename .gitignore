@@ -20,3 +20,6 @@
 !/tmp/storage/.keep
 
 /public/assets
+
+.env*
+!.env*example

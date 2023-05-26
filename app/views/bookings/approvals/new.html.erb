@@ -1,0 +1,8 @@
+<%= turbo_frame_tag :new_approval do %>
+  <% if @booking.reviewable?(by: Current.user) %>
+    <div class="button-group">
+      <%= button_to "Approve", booking_approvals_path(@booking), class: "button--success" %>
+      <%= button_to "Reject", booking_rejections_path(@booking), class: "button--danger" %>
+    </div>
+  <% end %>
+<% end %>

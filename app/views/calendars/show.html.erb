@@ -1,0 +1,13 @@
+<%= turbo_frame_tag :calendar do %>
+  <%= month_calendar(events: @bookings, attribute: :arrival_at, end_attribute: :departure_at) do |date, bookings| %>
+    <%= date.day %>
+
+    <% unless date < Date.today || date > @cutoff_date %>
+      <% if bookings.any? %>
+        <div>
+          <strong class="calendar__day--unavailable">BOOKED</strong>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

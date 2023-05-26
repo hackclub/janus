@@ -1,0 +1,67 @@
+.simple-calendar {
+  .day {}
+
+  .wday-0 {}
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {}
+
+  .today {}
+  .past {}
+  .future {}
+
+  .start-date {}
+
+  .prev-month {}
+  .next-month { }
+  .current-month {}
+
+  .has-events {}
+
+  .calendar-heading {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-style: hidden;
+    outline: 1px solid #dddddd;
+    border-radius: 10px;
+  }
+
+  thead tr {
+    th:first-child {
+      border-top-left-radius: 10px;
+    }
+
+    th:last-child {
+      border-top-right-radius: 10px;
+    }
+  }
+
+  tbody tr:last-child {
+    td:first-child {
+      border-bottom-left-radius: 10px;
+    }
+
+    td:last-child {
+      border-bottom-right-radius: 10px;
+    }
+  }
+}
+
+.calendar__day--available {
+  color: green;
+}
+
+.calendar__day--unavailable {
+  color: orangered;
+}

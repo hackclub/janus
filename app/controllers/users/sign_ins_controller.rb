@@ -3,6 +3,14 @@ class Users::SignInsController < ApplicationController
   before_action :redirect_if_authenticated
 
   def new
+    if Rails.env.development?
+      if params[:email]
+        return redirect_to new_session_path + "?email=#{params[:email]}"
+      else
+        render and return
+      end
+    end
+
     session[:state] = SecureRandom.hex(16)
     session[:nonce] = SecureRandom.hex(16)
 

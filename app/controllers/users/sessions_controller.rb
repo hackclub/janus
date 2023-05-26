@@ -3,13 +3,29 @@ class Users::SessionsController < ApplicationController
   before_action :redirect_if_authenticated, only: :new
 
   def new
-    redirect_to sign_in_path and return unless params[:code]
+    if Rails.env.development?
+      if params[:email]
+        if (user = User.find_or_create_by(email_address: params[:email]))
+          cookies.encrypted[:session_token] = user.sessions.create!.token if user.persisted?
 
-    Slack.client.authorization_code = params[:code]
-    userinfo = Slack.client.access_token!.userinfo!
+          return redirect_to root_path
+        end
+      else
+        return redirect_to sign_in_path
+      end
+    end
 
-    if userinfo&.raw_attributes["https://slack.com/team_id"] != "T0266FRGM" || userinfo&.email_verified != true
-      render plain: "You're not in the Hack Club Slack and/or haven't verified your email!", status: :unauthorized and return
+    return redirect_to sign_in_path unless params[:code]
+
+    begin
+      Slack.client.authorization_code = params[:code]
+      userinfo = Slack.client.access_token!.userinfo!
+    rescue OpenIDConnect::Exception
+      return redirect_to sign_in_path
+    end
+
+    if userinfo.raw_attributes["https://slack.com/team_id"] != "T0266FRGM" || userinfo.email_verified != true
+      return redirect_to sign_in_path notice: "You're not in the Hack Club Slack and/or haven't verified your email!"
     end
 
     user = User.find_or_initialize_by(slack_id: userinfo.raw_attributes["https://slack.com/user_id"])

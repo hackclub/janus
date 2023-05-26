@@ -4,10 +4,20 @@ Rails.application.routes.draw do
   get "up", to: "rails/health#show", as: :rails_health_check
 
   get "sign_in", to: "users/sign_ins#new"
+  get "sign_out", to: "users/sign_outs#new"
 
   scope path: "my", module: :users do
-    resource :session, only: [:new, :destroy]
+    resources :sessions, only: [:new, :destroy]
   end
 
+  resource :calendar, only: [:show]
+
   root to: "bookings#index"
+  resources :bookings, only: [:show, :edit, :update] do
+    resources :approvals, only: [:new, :create], module: :bookings
+    resources :rejections, only: [:create], module: :bookings
+  end
+  namespace :bookings do
+    resources :requests, only: [:index, :new, :create]
+  end
 end

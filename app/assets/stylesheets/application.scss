@@ -12,4 +12,15 @@
  *
  *= require_tree .
  *= require_self
- */
+*/
+
+@import "simple_calendar";
+@import "components/simple_calendar";
+
+body {
+  grid-template-columns: 1fr calc(min(50rem, 90%)) 1fr;
+}
+
+.field_with_errors {
+  border: darkred 1px solid;
+}

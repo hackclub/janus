@@ -10,9 +10,76 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_05_21_221434) do
+ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "guest_id"
+    t.bigint "reviewer_id"
+    t.integer "status"
+    t.datetime "arrival_at"
+    t.datetime "departure_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["arrival_at"], name: "index_bookings_on_arrival_at"
+    t.index ["departure_at"], name: "index_bookings_on_departure_at"
+    t.index ["guest_id"], name: "index_bookings_on_guest_id"
+    t.index ["reviewer_id"], name: "index_bookings_on_reviewer_id"
+    t.index ["status"], name: "index_bookings_on_status"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "eventable_type"
+    t.bigint "eventable_id"
+    t.bigint "creator_id"
+    t.string "action"
+    t.jsonb "details", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["action"], name: "index_events_on_action"
+    t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.index ["details"], name: "index_events_on_details"
+    t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable"
+  end
 
   create_table "user_sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -40,5 +107,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_05_21_221434) do
     t.index ["slack_id"], name: "index_users_on_slack_id", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "users", column: "guest_id"
+  add_foreign_key "bookings", "users", column: "reviewer_id"
   add_foreign_key "user_sessions", "users"
 end
