@@ -13,11 +13,13 @@ Rails.application.routes.draw do
   resource :calendar, only: [:show]
 
   root to: "bookings#index"
-  resources :bookings, only: [:show, :edit, :update] do
-    resources :approvals, only: [:new, :create], module: :bookings
-    resources :rejections, only: [:create], module: :bookings
-  end
   namespace :bookings do
     resources :requests, only: [:index, :new, :create]
+  end
+  resources :bookings, only: [:show, :edit, :update] do
+    scope module: :bookings do
+      resources :approvals, only: :create
+      resources :rejections, only: :create
+    end
   end
 end

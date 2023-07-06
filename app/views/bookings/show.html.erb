@@ -1,5 +1,12 @@
 <h3><%= @booking.title %></h3>
 
 <% if Current.user.staff? %>
-  <%= turbo_frame_tag :new_approval, src: new_booking_approval_path(@booking) %>
+  <% if @booking.reviewable?(by: Current.user) %>
+    <section>
+      <div class="button-group">
+        <%= button_to "Approve", booking_approvals_path(@booking), class: "button--success" %>
+        <%= button_to "Reject", booking_rejections_path(@booking), class: "button--danger" %>
+      </div>
+    </section>
+  <% end %>
 <% end %>

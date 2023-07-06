@@ -1,9 +1,6 @@
 class Bookings::ApprovalsController < ApplicationController
   include BookingScoped
 
-  def new
-  end
-
   def create
     if Current.user.staff?
       @booking.approve
