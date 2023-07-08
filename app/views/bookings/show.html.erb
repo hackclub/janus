@@ -1,12 +1,17 @@
 <h3><%= @booking.title %></h3>
 
-<% if Current.user.staff? %>
-  <% if @booking.reviewable?(by: Current.user) %>
-    <section>
-      <div class="button-group">
-        <%= button_to "Approve", booking_approvals_path(@booking), class: "button--success" %>
-        <%= button_to "Reject", booking_rejections_path(@booking), class: "button--danger" %>
-      </div>
-    </section>
-  <% end %>
+<% if @booking.reviewable?(by: Current.user) %>
+  <section>
+    <div class="button-group">
+      <%= button_to "Approve", booking_approvals_path(@booking), class: "button--success" %>
+      <%= button_to "Reject", booking_rejections_path(@booking), class: "button--danger" %>
+    </div>
+  </section>
 <% end %>
+
+<section>
+  <h3>Justification</h3>
+  <article>
+    <%= @booking.justification %>
+  </article>
+</section>
