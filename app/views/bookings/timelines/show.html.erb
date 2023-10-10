@@ -1,0 +1,9 @@
+<%= turbo_frame_tag :timeline do %>
+  <% @events.each do |event| %>
+    <% if event.eventable.is_a?(Comment) %>
+      <%= turbo_frame_tag event.eventable, src: comment_path(event.eventable) %>
+    <% else %>
+      <%= render partial: "events/event", object: event %>
+    <% end %>
+  <% end %>
+<% end %>

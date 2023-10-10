@@ -8,16 +8,27 @@ Rails.application.routes.draw do
     resources :sessions, only: [:new, :destroy]
   end
 
+  concern :commentable do |options|
+    resources :comments, shallow: true, except: :index, **options
+  end
+
   resource :calendar, only: :show
 
   root to: "bookings#index"
+
+  resources :events, only: :show
+
   namespace :bookings do
     resources :requests, only: [:index, :new, :create]
   end
   resources :bookings, only: [:show, :edit, :update] do
     scope module: :bookings do
+      resource :timeline, only: :show
+
       resources :approvals, only: :create
       resources :rejections, only: :create
     end
+
+    concerns :commentable
   end
 end

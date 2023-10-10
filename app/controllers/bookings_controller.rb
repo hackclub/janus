@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :set_booking, except: [:index]
 
   def index
+    @bookings = Current.user.bookings.chronologically
   end
 
   def show
@@ -11,6 +12,7 @@ class BookingsController < ApplicationController
   end
 
   def update
+    @booking.update(booking_params)
   end
 
   private

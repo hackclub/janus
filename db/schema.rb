@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_06_130526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,8 +52,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "booking_involvements", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.bigint "guest_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id", "guest_id"], name: "index_booking_involvements_on_booking_id_and_guest_id", unique: true
+    t.index ["guest_id"], name: "index_booking_involvements_on_guest_id"
+  end
+
   create_table "bookings", force: :cascade do |t|
-    t.bigint "guest_id"
+    t.bigint "creator_id"
     t.bigint "reviewer_id"
     t.integer "status"
     t.datetime "arrival_at"
@@ -61,10 +70,20 @@ ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["arrival_at"], name: "index_bookings_on_arrival_at"
+    t.index ["creator_id"], name: "index_bookings_on_creator_id"
     t.index ["departure_at"], name: "index_bookings_on_departure_at"
-    t.index ["guest_id"], name: "index_bookings_on_guest_id"
     t.index ["reviewer_id"], name: "index_bookings_on_reviewer_id"
     t.index ["status"], name: "index_bookings_on_status"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.bigint "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["creator_id"], name: "index_comments_on_creator_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -75,10 +94,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
     t.jsonb "details", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "target_id"
     t.index ["action"], name: "index_events_on_action"
     t.index ["creator_id"], name: "index_events_on_creator_id"
     t.index ["details"], name: "index_events_on_details"
     t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable"
+    t.index ["target_id"], name: "index_events_on_target_id"
   end
 
   create_table "user_sessions", force: :cascade do |t|
@@ -96,7 +117,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "slack_id", null: false
+    t.string "slack_id"
     t.string "email_address", null: false
     t.string "name"
     t.integer "role"
@@ -109,7 +130,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_06_30_220516) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "bookings", "users", column: "guest_id"
+  add_foreign_key "booking_involvements", "bookings"
+  add_foreign_key "booking_involvements", "users", column: "guest_id"
+  add_foreign_key "bookings", "users", column: "creator_id"
   add_foreign_key "bookings", "users", column: "reviewer_id"
+  add_foreign_key "comments", "users", column: "creator_id"
+  add_foreign_key "events", "users", column: "target_id"
   add_foreign_key "user_sessions", "users"
 end

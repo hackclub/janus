@@ -1,0 +1,8 @@
+<%= turbo_frame_tag @comment do %>
+  <%= @comment.creator.name %> <%= local_time_ago(@comment.created_at) %>
+  <%= link_to "✏️", edit_comment_path(@comment) if @comment.creator == Current.user %>
+
+  <blockquote>
+    <%= @comment.content %>
+  </blockquote>
+<% end %>

@@ -1,0 +1,6 @@
+<%= turbo_frame_tag @commentable, @comment, target: "_top" do %>
+  <%= form_with model: [@commentable, @comment] do |form| %>
+    <%= form.rich_text_area :content %>
+    <%= form.submit "Comment" %>
+  <% end %>
+<% end %>
