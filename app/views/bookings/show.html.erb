@@ -1,4 +1,7 @@
+<%= turbo_stream_from @booking %>
+
 <h3><%= @booking.title %></h3>
+<p>from <%= @booking.creator.name %></p>
 
 <% if @booking.reviewable?(by: Current.user) %>
   <section>
@@ -14,4 +17,11 @@
   <article>
     <%= @booking.justification %>
   </article>
+</section>
+
+<section>
+  <h3>Discussion</h3>
+  <%= turbo_frame_tag :timeline, src: booking_timeline_path(@booking) %>
+
+  <%= turbo_frame_tag @booking, Comment.new, src: new_booking_comment_path(@booking) %>
 </section>

@@ -3,11 +3,12 @@ module Eventable
 
   included do
     has_many :events, as: :eventable, dependent: :destroy
+    after_create -> { record(:created, by: Current.user) }
   end
 
   private
 
-  def record(action, by: Current.user)
-    events.create!(action: action, creator: by)
+  def record(action, target = nil, by: nil, **details)
+    events.create! action: action, target: target, creator: by, details: details
   end
 end

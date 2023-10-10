@@ -22,6 +22,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 gem "simple_calendar"
+gem "local_time"
 
 # Security
 gem "openid_connect"

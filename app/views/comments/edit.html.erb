@@ -1,0 +1,6 @@
+<%= turbo_frame_tag @comment do %>
+  <%= form_with model: @comment do |form| %>
+    <%= form.rich_text_area :content %>
+    <%= form.submit %>
+  <% end %>
+<% end %>

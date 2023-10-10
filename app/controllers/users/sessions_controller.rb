@@ -4,12 +4,10 @@ class Users::SessionsController < ApplicationController
 
   def new
     if Rails.env.development?
-      if params[:email]
-        if (user = User.find_or_create_by(email_address: params[:email]))
-          cookies.encrypted[:session_token] = user.sessions.create!.token if user.persisted?
+      if (user = User.find_or_create_by!(email_address: params[:email]))
+        cookies.encrypted[:session_token] = user.sessions.create!.token
 
-          return redirect_to root_path
-        end
+        return redirect_to root_path
       else
         return redirect_to sign_in_path
       end
