@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: bundler
+    directory: /
+    open-pull-requests-limit: 10
+    schedule:
+      interval: monthly
+      time: 10:00
+      timezone: America/New_York
