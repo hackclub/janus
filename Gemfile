@@ -7,16 +7,18 @@ gem "rails", github: "rails/rails"
 gem "puma"
 gem "sqlite3"
 
+# DB-backed adapters
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
+
 # Assets
 gem "propshaft"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 
-# DB-backed adapters
-gem "solid_cache"
-gem "solid_queue"
-gem "solid_cable"
+gem "openid_connect"
 
 gem "bootsnap", require: false # reduces boot times through caching; required in config/boot.rb
 

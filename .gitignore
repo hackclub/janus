@@ -19,4 +19,4 @@
 
 /public/assets
 
-/config/master.key
+/config/credentials/production.key
