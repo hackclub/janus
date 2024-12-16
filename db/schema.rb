@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2024_12_11_215323) do
+ActiveRecord::Schema[8.1].define(version: 2024_12_16_142041) do
+  create_table "bookings", force: :cascade do |t|
+    t.integer "occurrence_id"
+    t.integer "guest_id"
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guest_id"], name: "index_bookings_on_guest_id"
+    t.index ["occurrence_id"], name: "index_bookings_on_occurrence_id"
+    t.index ["status"], name: "index_bookings_on_status"
+  end
+
   create_table "events", force: :cascade do |t|
     t.integer "request_id"
     t.string "subject_type", null: false
@@ -24,6 +35,18 @@ ActiveRecord::Schema[8.1].define(version: 2024_12_11_215323) do
     t.index ["creator_id"], name: "index_events_on_creator_id"
     t.index ["request_id"], name: "index_events_on_request_id"
     t.index ["subject_type", "subject_id", "action"], name: "index_events_on_subject_type_and_subject_id_and_action"
+  end
+
+  create_table "occurrences", force: :cascade do |t|
+    t.string "occurable_type"
+    t.integer "occurable_id"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ends_at"], name: "index_occurrences_on_ends_at"
+    t.index ["occurable_type", "occurable_id"], name: "index_occurrences_on_occurable"
+    t.index ["starts_at"], name: "index_occurrences_on_starts_at"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -59,6 +82,8 @@ ActiveRecord::Schema[8.1].define(version: 2024_12_11_215323) do
     t.index ["slack_id"], name: "index_users_on_slack_id", unique: true
   end
 
+  add_foreign_key "bookings", "occurrences"
+  add_foreign_key "bookings", "users", column: "guest_id"
   add_foreign_key "events", "requests"
   add_foreign_key "events", "users", column: "creator_id"
   add_foreign_key "sessions", "users"

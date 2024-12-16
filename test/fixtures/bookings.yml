@@ -1,0 +1,6 @@
+pending_for_a_month_from_now:
+  guest: matt
+
+approved_for_a_week_from_now:
+  status: approved
+  guest: matt

@@ -3,3 +3,8 @@ matt:
   slack_id: U04KP6JF9NH
   email_address: matt7@hey.com
   role: admin
+
+sam:
+  name: Sam Poder
+  slack_id: USNPNJXNX
+  email_address: sampoder@berkeley.edu
