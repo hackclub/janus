@@ -37,6 +37,7 @@ class My::SessionsController < ApplicationController
         user.save!
 
         start_new_session_for user
+        redirect_to root_path
       end
     else
       redirect_to new_my_session_path, notice: "You're not in the Hack Club Slack or haven't verified your email yet!"
