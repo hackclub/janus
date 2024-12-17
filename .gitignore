@@ -17,6 +17,9 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
 /public/assets
 
 /config/credentials/production.key
