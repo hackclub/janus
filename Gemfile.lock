@@ -312,6 +312,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simple_calendar (3.0.4)
+      rails (>= 6.1)
     solid_cable (3.0.4)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -439,6 +441,7 @@ DEPENDENCIES
   puma
   rails!
   selenium-webdriver
+  simple_calendar
   solid_cable
   solid_cache
   solid_queue

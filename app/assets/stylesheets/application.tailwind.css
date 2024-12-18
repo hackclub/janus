@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .simple-calendar {
+    .day {
+      &:has(.occupied) {
+        @apply bg-red-300;
+      }
+    }
+
+    .prev-month .next-month {
+      background: lightgray;
+    }
+  }
+}

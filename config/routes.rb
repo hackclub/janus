@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     resources :sessions, only: %i[new destroy]
   end
 
-  root to: "calendars#show"
+  root to: "occurrences#index"
 end

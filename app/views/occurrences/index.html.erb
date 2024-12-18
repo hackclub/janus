@@ -1,0 +1,11 @@
+<div class="container copy">
+  <%= month_calendar(events: @occurrences, attribute: :starts_at, end_attribute: :ends_at) do |date, occurrences| %>
+    <%= date.day %>
+
+    <% if occurrences.any?(&:booking?) %>
+      <p class="occupied sr-only">
+        BOOKED
+      </p>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,38 @@
+<div class="simple-calendar">
+  <header class="mt-3 text-center text-3xl flex justify-between">
+    <%= link_to "<", calendar.url_for_previous_view, class: "no-underline",
+          aria: {label: start_date.prev_month.strftime("%B %Y")} %>
+
+    <h1>
+      <%= start_date.strftime("%B %Y") %>
+    </h1>
+
+    <%= link_to ">", calendar.url_for_next_view, class: "no-underline",
+          aria: {label: start_date.next_month.strftime("%B %Y")} %>
+  </header>
+
+  <table class="mt-1 border-collapse table-fixed">
+    <thead class="text-left">
+      <tr>
+        <% date_range.slice(0, 7).each do |day| %>
+          <th class="border border-b-2 border-gray-200 p-1">
+            <%= day.strftime("%a") %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% date_range.each_slice(7) do |week| %>
+        <tr>
+          <% week.each do |day| %>
+            <%= content_tag :td, class: calendar.td_classes_for(day) \
+                  << "border border-gray-200 p-1 break-words h-20" do %>
+              <% instance_exec(day, calendar.sorted_events_for(day), &passed_block) %>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -19,6 +19,8 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
 
+gem "simple_calendar"
+
 gem "openid_connect"
 
 gem "bootsnap", require: false # reduces boot times through caching; required in config/boot.rb
